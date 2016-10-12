@@ -1,0 +1,20 @@
+ z = imread(filename); 
+        z = im2uint8(z);
+        %Get field from File
+        %field=filename(4:length(filename) -6); %cambio
+        field=filename(5:length(filename) -6)
+        field(regexp(field,',')) = '.'
+        Happ(i)=str2double(field);
+        
+        %Get selected background from z matrix
+        zout=z(y_bkg:y_bkg+d_bkg_y,x_bkg:x_bkg+d_bkg_x);
+        zout1=z(82,281)
+            %x280,y81
+        zout1=z(1,1)
+        
+
+puntos x 280 e y  81  en pythhon
+y x 0 e y 0
+!!
+Esta es la funcion que lo convierte a 8bits
+z = im2uint8(z);
