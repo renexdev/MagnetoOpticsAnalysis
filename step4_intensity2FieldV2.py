@@ -8,24 +8,24 @@ sys.path.append("./modules/")
 filename = '30.0K_20x_01_d1_intensity_h_01'
 filename = '30.0K_20x_01_d1_intensity_v_01'
 filename = '30.0K_20x_01_d1_intensity_h_02'
-#filename = '30.0K_20x_01_d1_intensity_v_02'
+filename = '30.0K_20x_01_d1_intensity_v_02'
 ##OUTPUTS
 
 filenameOut = '30.0K_20x_01_d1_gauss_h_01'
 filenameOut = '30.0K_20x_01_d1_gauss_v_01'
 filenameOut = '30.0K_20x_01_d1_gauss_h_02'
-#filenameOut = '30.0K_20x_01_d1_gauss_v_02'
+filenameOut = '30.0K_20x_01_d1_gauss_v_02'
 dataIn = np.loadtxt(filename+".dat")
 print "Run twice. First to determine value of correction w flag first. Then take the correction value an change flag"
 flag = "first"
 flag = ""
 corrMin = 0
-if (flag!="first"): corrMin = 34471.0
+if (flag!="first"): corrMin = 34937.0
 
 #corrMin = 34509.0 #1h
 #corrMin = 34979.0 #1v
 #corrMin = 34471.0 #2h
-#corrMin = 34874.0 #2v
+#corrMin = 34937.0 #2v
 print corrMin
 
 ####################################################################################################################################
@@ -82,12 +82,13 @@ for i in range(1,lenRow):
 			maxVals.append(dataIn[i,j])
 			spline3MaxVals.append(interpolate.splev(dataIn[i,j], tck, der=0))
 			print "MAX %d %d (%.2f G) - value %d- max %d - dif %d"%(i,j,dataIn[0,j],dataIn[i,j],max(Int),dataIn[i,j]-max(Int))
-		if(dataIn[i,j]>min(Int) and dataIn[i,j]<max(Int)):
+		if(dataIn[i,j]>=min(Int) and dataIn[i,j]<=max(Int)):
 			writeIt.write("%.4f\t" % (interpolate.splev(dataIn[i,j], tck, der=0))) #800	
 		if(dataIn[i,j]>max(Int)):
 			writeIt.write("%.4f\t" % (linearFit(dataIn[i,j]))) #800	
 			print linearFit(dataIn[i,j])
 			linearMaxVals.append(linearFit(dataIn[i,j]))
+
 			#writeIt.write("%.4f\t" % (interpolate.splev(dataIn[i,j], tck, der=0))) #800
 	writeIt.write("\n")
 writeIt.close()

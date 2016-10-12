@@ -31,10 +31,10 @@ flag_external =1
 offset_y_inf = -10
 offset_y_sup = 10
 #filenames
-tempID = "08.0"
+tempID = "30.0"
 discoId = "1"
 diskSize= "_50um"
-profile_direction="v" #h: horizontal, v=vertical
+profile_direction="h" #h: horizontal, v=vertical
 filename01=tempID+"K_20x_01_d"+discoId+"_gauss_"+profile_direction+"_01"
 filename02=tempID+"K_20x_01_d"+discoId+"_gauss_"+profile_direction+"_02"
 external_feed="d0"+discoId+diskSize+"_Coordinates_Hyst_"+tempID+"K_20x_01"
