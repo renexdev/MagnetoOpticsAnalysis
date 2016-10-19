@@ -5,27 +5,28 @@ from scipy import stats
 import sys
 sys.path.append("./modules/")
 ####################################################################################################################################
-filename = '30.0K_20x_01_d1_intensity_h_01'
-filename = '30.0K_20x_01_d1_intensity_v_01'
-filename = '30.0K_20x_01_d1_intensity_h_02'
-filename = '30.0K_20x_01_d1_intensity_v_02'
+filename = '12.6K_20x_01_d1_intensity_h_01'
+filename = '12.6K_20x_01_d1_intensity_v_01'
+filename = '12.6K_20x_01_d1_intensity_h_02'
+filename = '12.6K_20x_01_d1_intensity_v_02'
 ##OUTPUTS
+print "**************************"
+print filename.replace("intensity", "gauss")
+print "**************************"
+y = filename.split('_')
+filenameOut = filename.replace("intensity", "gauss")
 
-filenameOut = '30.0K_20x_01_d1_gauss_h_01'
-filenameOut = '30.0K_20x_01_d1_gauss_v_01'
-filenameOut = '30.0K_20x_01_d1_gauss_h_02'
-filenameOut = '30.0K_20x_01_d1_gauss_v_02'
 dataIn = np.loadtxt(filename+".dat")
 print "Run twice. First to determine value of correction w flag first. Then take the correction value an change flag"
 flag = "first"
 flag = ""
 corrMin = 0
-if (flag!="first"): corrMin = 34937.0
+if (flag!="first"): corrMin = 34729.0
 
-#corrMin = 34509.0 #1h
-#corrMin = 34979.0 #1v
-#corrMin = 34471.0 #2h
-#corrMin = 34937.0 #2v
+#corrMin = 34351.0 #1h
+#corrMin = 34805.0 #1v
+#corrMin = 34288.0 #2h
+#corrMin = 34729.0 #2v
 print corrMin
 
 ####################################################################################################################################
@@ -33,9 +34,14 @@ writeIt = open(filenameOut+".dat", "w")
 
 relPath = "./"
 #Calibration curve
-#filename = 'd01_Hyst_30.0K_20x_01_IvsH_bkgId_2_01'
-filename = 'd01_Hyst_30.0K_20x_01_IvsH_bkgId_2_02_sorted'
+if  (y[6]=="01"): filename = 'd01_Hyst_12.6K_20x_01_IvsH_bkgId_2_'+y[6]
+if  (y[6]=="02"): filename = 'd01_Hyst_12.6K_20x_01_IvsH_bkgId_2_'+y[6]+'_sorted'
+#run step5_descendingChangePointOrderV1.py script to reorder
+#filename = 'd01_Hyst_12.6K_20x_01_IvsH_bkgId_2_02_sorted'
 calCurve = np.loadtxt(relPath+filename+".dat")
+print "**************************"
+print filename
+print "**************************"
 
 Int = np.array([calCurve[i,0] for i in range(len(calCurve[:,0]))])
 Ha = np.array([calCurve[i,1] for i in range(len(calCurve[:,0]))])
@@ -51,8 +57,10 @@ tck = interpolate.splrep(Int, Ha, s=0)
 yPy = interpolate.splev(Int, tck, der=0)
 
 #last points
-IntLast = Int[-9:]
-HaLast = Ha[-9:]
+n = 20
+print "Points to perform linear fit for high values %d"%(n)
+IntLast = Int[-n:]
+HaLast = Ha[-n:]
 slope, intercept, r_value, p_value, std_err = stats.linregress(IntLast,HaLast)
 
 linearFit = lambda x: slope*x+intercept
@@ -96,6 +104,8 @@ if(len(minVals)!=0): print min(minVals)
 
 plt.plot(Int, Ha, 'o',Int, yPy , 'b',minVals,spline3MinVals ,'ko' ,maxVals,spline3MaxVals ,'go',maxVals,linearMaxVals ,'ro')
 plt.legend(['data', 'cubic spline python'], loc='best')
+
+
 
 
 plt.show()

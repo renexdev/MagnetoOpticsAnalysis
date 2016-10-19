@@ -31,7 +31,7 @@ flag_external =1
 offset_y_inf = -10
 offset_y_sup = 10
 #filenames
-tempID = "30.0"
+tempID = "12.6"
 discoId = "1"
 diskSize= "_50um"
 profile_direction="h" #h: horizontal, v=vertical

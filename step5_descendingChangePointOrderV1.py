@@ -12,8 +12,8 @@ from scipy.optimize import leastsq
 
 
 ####################################################################################################################################
-filename = 'd01_Hyst_30.0K_20x_01_IvsH_bkgId_2_02'
-filenameOut = 'd01_Hyst_30.0K_20x_01_IvsH_bkgId_2_02_sorted'
+filename = 'd01_Hyst_12.6K_20x_01_IvsH_bkgId_2_02'
+filenameOut = 'd01_Hyst_12.6K_20x_01_IvsH_bkgId_2_02_sorted'
 dataIn = np.loadtxt(filename+".dat")
 ####################################################################################################################################
 #writeIt1 = open(filenameOut+"_odd.dat", "w")	
